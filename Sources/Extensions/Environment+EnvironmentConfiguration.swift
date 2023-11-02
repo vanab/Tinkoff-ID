@@ -17,8 +17,13 @@
 //  limitations under the License.
 
 import Foundation
+import TCSSSLPinning
 
 extension TinkoffEnvironment: EnvironmentConfiguration {
+    public var hostAndPinsUrl: String? {
+        .defaultHostAndPinsUrl
+    }
+    
     public var apiBaseUrl: String {
         switch self {
         case .production:

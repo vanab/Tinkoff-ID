@@ -10,4 +10,8 @@ TinkoffID Debug/TinkoffID Debug.xcodeproj/xcuserdata
 # AppCode
 .idea
 
+## Build generated
+build/
+DerivedData/
+
 .swiftpm

@@ -1,5 +1,5 @@
 //
-//  EnvironmentConfiguration.swift
+//  MockedWebView.swift
 //  TinkoffID
 //
 //  Copyright (c) 2021 Tinkoff
@@ -14,14 +14,20 @@
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
-//  limitations under the License.ы
+//  limitations under the License.
 
 import Foundation
+@testable import TinkoffID
 
-/// Описывает окружение для работы SDK
-public protocol EnvironmentConfiguration {
-    /// Базовый URL API
-    var apiBaseUrl: String { get }
-    /// URL Host and Pins для работы с кастомными сертификатами TLS/SSL
-    var hostAndPinsUrl: String? { get }
+final class MockedWebView: IAuthWebView {
+    
+    weak var delegate: IAuthWebViewDelegate?
+
+    var subbedDidOpenURLResult: URL!
+
+    func open(from: UIViewController?) {
+        delegate?.authWebView(self, didOpen: subbedDidOpenURLResult)
+    }
+
+    func dismiss() {}
 }

@@ -1,25 +1,41 @@
 PODS:
-  - SnapKit (5.0.1)
-  - TinkoffID (1.1.0)
-  - TinkoffID/Tests (1.1.0)
+  - SnapKit (5.6.0)
+  - TCSSSLPinningPublic (8.1.1):
+    - TrustKit (~> 3.0.2)
+  - TinkoffID (1.2.1):
+    - TCSSSLPinningPublic (~> 8.1)
+  - TinkoffID/Tests (1.2.1):
+    - TCSSSLPinningPublic (~> 8.1)
+  - TrustKit (3.0.3)
 
 DEPENDENCIES:
   - SnapKit
+  - TCSSSLPinningPublic (from `https://opensource.tinkoff.ru/tinkoff-mobile-tech/sslpinning.git`)
   - TinkoffID (from `../`)
   - TinkoffID/Tests (from `../`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - SnapKit
+    - TrustKit
 
 EXTERNAL SOURCES:
+  TCSSSLPinningPublic:
+    :git: https://opensource.tinkoff.ru/tinkoff-mobile-tech/sslpinning.git
   TinkoffID:
     :path: "../"
 
+CHECKOUT OPTIONS:
+  TCSSSLPinningPublic:
+    :commit: 28912097a68d6e4134594c10d9683ed6257628ec
+    :git: https://opensource.tinkoff.ru/tinkoff-mobile-tech/sslpinning.git
+
 SPEC CHECKSUMS:
-  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  TinkoffID: 5f8c16ed1ec6ab3c055d76b162d5770a324ad3db
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  TCSSSLPinningPublic: 8066cba4a6fd84ae4d288fcce6def7e374b0d01f
+  TinkoffID: 6bffd4e763d8f1938d95c18b94d52a20f4d4937c
+  TrustKit: 7858ea59d0e226b1457b2e9cc8b95d77ab21d471
 
-PODFILE CHECKSUM: ebbf3aa204a2c47033aee78dc783acf8bc5423bd
+PODFILE CHECKSUM: 4685522448835beb4ec45f26eb2398e00a599ea3
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.12.1

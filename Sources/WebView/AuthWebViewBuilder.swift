@@ -1,8 +1,8 @@
 //
-//  TinkoffApp+TargetAppConfiguration.swift
+//  AuthWebViewBuilder.swift
 //  TinkoffID
 //
-//  Copyright (c) 2021 Tinkoff
+//  Copyright (c) 2023 Tinkoff
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,26 +18,22 @@
 
 import Foundation
 
-extension TinkoffApp: TargetAppConfiguration {
+protocol IAuthWebViewBuilder {
+    func build(with options: AppLaunchOptions) -> IAuthWebView
+}
+
+final class AuthWebViewBuilder: IAuthWebViewBuilder {
     
-    public var urlScheme: String {
-        switch self {
-        case .bank:
-            return "tinkoffbank://"
-        }
+    private var baseUrl: String
+    private var pinningDelegate: PinningDelegate
+    
+    init(baseUrl: String,
+         pinningDelegate: PinningDelegate) {
+        self.baseUrl = baseUrl
+        self.pinningDelegate = pinningDelegate
     }
     
-    public var usesUniversalLinks: Bool {
-        switch self {
-        case .bank:
-            return true
-        }
-    }
-    
-    public var authUrl: String {
-        switch self {
-        case .bank:
-            return "https://tinkoff.ru/partner_auth"
-        }
+    func build(with options: AppLaunchOptions) -> IAuthWebView {
+        return AuthWebView(pinningDelegate: pinningDelegate, options: options, baseUrl: baseUrl)
     }
 }

@@ -1,6 +1,9 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
 use_frameworks!
 
 target 'TinkoffIDExample' do
   pod 'TinkoffID', path: '../', testspecs: ['Tests']
   pod 'SnapKit'
+  pod 'TCSSSLPinningPublic', git: 'https://opensource.tinkoff.ru/tinkoff-mobile-tech/sslpinning.git'
 end
