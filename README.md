@@ -55,7 +55,7 @@ pod 'TinkoffID'
 
 Для работы SDK необходимо следующее:
 
-+ iOS 10 и выше
++ iOS 13 и выше
 + Зарегистрированный идентификатор авторизуемого приложения (`client_id`)
 + Зарегистрированная авторизуемым приложением [URL схема](https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content/defining_a_custom_url_scheme_for_your_app), которая будет использоваться для возврата в приложение после авторизации
 + Добавленная запись в `plist`, позволяющая Вашему приложению переходить в приложение Тинькофф:
