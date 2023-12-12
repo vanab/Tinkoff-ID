@@ -24,7 +24,8 @@ public typealias SignOutCompletion = (Result<Void, Error>) -> Void
 /// Объект, инициирующий процедуру входа с помощью Тинькофф
 public protocol ITinkoffAuthInitiator {
     /// Возвращает `true` если есть возможность авторизоваться в приложении
-    /// Если флаг `false`, то вызов `signIn` приведет к открытию App Store
+    /// Если флаг `false`, то вызов `startTinkoffAuth` приведет к открытию WevView или ошибке,
+    /// если вход через WevView не был настроен
     var isTinkoffAuthAvailable: Bool { get }
     
     /// Инициирует вход

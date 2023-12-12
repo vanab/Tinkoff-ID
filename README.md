@@ -110,7 +110,7 @@ pod 'TinkoffID'
 + `ITinkoffAuthCallbackHandler` - обработчик возврата в приложение из приложения Тинькофф
 + `ITinkoffCredentialsRefresher` - объект, умеющий обновлять `Credentials` по их `Refresh token`
 + `ITinkoffSignOutInitiator` - инициатор отзыва авторизационных данных
-+ `ITinkoffWebViewPresentationProvider` - провайдет источника для показа [WebView](#Авторизация-через-WebView)
++ `ITinkoffWebViewPresentationProvider` - провайдет источника для показа [WebView](#auth)
 
 В зависимости от архитектуры приложения можно использовать непосредственно`ITinkoffID` или каждый подпротокол отдельно в требуемой части системы.
 
@@ -150,7 +150,8 @@ let tinkoffId = factory.build()
 
 ### Перед началом
 
-`ITinkoffAuthInitiator` может предоставить информацию о возможности выполнения авторизации с помощью флага `isTinkoffAuthAvailable`. Поднятый флаг означает, что у пользователя установлено приложение Тинькофф, через которое можно осуществить вход. При вызове метода `startTinkoffAuth` с поднятным флагом будет осуществлен переход в заданное приложение для инициализации авторизации, в случае если флаг опущен, пользователь будет перенаправлен на страницу этого приложения в App Store.
+`ITinkoffAuthInitiator` может предоставить информацию о возможности выполнения авторизации с помощью флага `isTinkoffAuthAvailable`. Поднятый флаг означает, что у пользователя установлено приложение Тинькофф, через которое можно осуществить вход. При вызове метода `startTinkoffAuth` с поднятным флагом будет осуществлен переход в заданное приложение для инициализации авторизации. В случае если флаг опущен, предусмотрена авторизация через WebView, описание в разделе [Авторизация через WebView](#auth), либо приложение получит ошибку `failedToLaunchApp`.
+ В случае если авторизация через  WebView не используется, а флаг `isTinkoffAuthAvailable` равен `false`, рекомендуется скрывать кнопку авторизации.
 
 ### Выполнение авторизации
 
@@ -233,7 +234,7 @@ tinkoffId.signOut(with: credentials.accessToken, tokenTypeHint: .access, complet
 
 При получении `TinkoffTokenPayload` и наличии у него поля `refreshToken` имеет смысл сохранить значение этого поля чтобы иметь возможность запросить новый `accessToken`, когда прежний станет неактивным. Рекомендуемый способ хранения токена - [Keychain Services](https://developer.apple.com/documentation/security/keychain_services)
 
-## Авторизация через WebView
+## <a id="auth" name="auth"></a>Авторизация через WebView
 
 В некоторых случаях система не открывает приложения по universal link, а ведет в браузер. Для того чтобы избежать этого, добавлен fallback на открытие WebView. 
 
@@ -359,6 +360,7 @@ SDK поставляется с примером приложения. Для з
 Почта для обращений - `tinkoff_id@tinkoff.ru`
 
 ## Разработчики
-* Дмитрий Оверчук - `d.overchuk@tinkoff.ru`
-* Камиль Бакаев - `k.bakaev@tinkoff.ru`
-* Вадим Жиликов - `v.zhilinkov@tinkoff.ru`
+* Никита Бабенко - `n.s.babenko@tinkoff.ru`
+* Анна Длужинская - `a.dluzhinskaya@tinkoff.ru`
+* Ярослав Косарев - `y.kosarev@tinkoff.ru`
+* Павел Маринченко - `p.marinchenko@tinkoff.ru`
