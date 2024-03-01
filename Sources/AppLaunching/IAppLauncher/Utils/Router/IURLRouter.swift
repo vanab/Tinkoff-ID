@@ -24,27 +24,18 @@ protocol IURLRouter {
     /// Возвращает `true` если заданный URL может быть открыт
     func canOpenURL(_ url: URL) -> Bool
     
-    /// Открывает заданный URL и возвращает `true` если открытие удалось
-    func open(_ url: URL) -> Bool
-    
     /// Открывает заданный URL c фоллбэком на открытие вебвью в случае если приложение не установлено
-    func openWithFallback(_ url: URL, universalLinksOnly: Bool, completion: @escaping ((Bool) -> Void)) -> Bool
+    func openWithFallback(_ url: URL, universalLinksOnly: Bool, completion: @escaping ((Bool) -> Void))
 }
 
 extension UIApplication: IURLRouter {
-    func open(_ url: URL) -> Bool {
-        guard canOpenURL(url) else { return false }
-        
-        open(url, options: [:], completionHandler: nil)
-        
-        return true
-    }
     
-    func openWithFallback(_ url: URL, universalLinksOnly: Bool, completion: @escaping ((Bool) -> Void)) -> Bool {
-        guard canOpenURL(url) else { return false }
+    func openWithFallback(_ url: URL, universalLinksOnly: Bool, completion: @escaping ((Bool) -> Void)) {
+        guard canOpenURL(url) else {
+            completion(false)
+            return
+        }
         
         open(url, options: [.universalLinksOnly : universalLinksOnly], completionHandler: completion)
-        
-        return true
     }
 }

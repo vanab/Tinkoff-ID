@@ -34,10 +34,10 @@ extension TinkoffApp: TargetAppConfiguration {
         }
     }
     
-    public var authUrl: String {
+    public var authDomains: [String] {
         switch self {
         case .bank:
-            return "https://tinkoff.ru/partner_auth"
+            return ["https://tinkoff.ru/", "https://ipa.srv-hub.org/"]
         }
     }
 }

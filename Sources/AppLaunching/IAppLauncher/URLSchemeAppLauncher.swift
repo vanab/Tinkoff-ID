@@ -21,7 +21,7 @@ import Foundation
 final class URLSchemeAppLauncher: IAppLauncher {
     
     enum Error: Swift.Error {
-        case launchFailure
+        case unableToInitializeAnyUrl
     }
     
     let builder: IURLSchemeBuilder
@@ -40,10 +40,30 @@ final class URLSchemeAppLauncher: IAppLauncher {
     }
     
     func launchApp(with options: AppLaunchOptions, universalLinksOnly: Bool, completion: @escaping ((Bool) -> Void)) throws {
-        let appUrl = try builder.buildUrlScheme(with: options)
+        let appUrls = builder.buildUrlSchemes(with: options)
+        guard !appUrls.isEmpty else {
+            throw Error.unableToInitializeAnyUrl
+        }
         
-        if !router.openWithFallback(appUrl, universalLinksOnly: universalLinksOnly, completion: completion) {
-            throw Error.launchFailure
+        tryOpenUniversalLink(appUrls, universalLinksOnly: universalLinksOnly, completion: completion)
+    }
+    
+    func tryOpenUniversalLink(_ urls: [URL], universalLinksOnly: Bool, completion: @escaping (Bool) -> Void) {
+        guard let url = urls.first else {
+            completion(false)
+            return
+        }
+        
+        router.openWithFallback(url, universalLinksOnly: universalLinksOnly) { [weak self] success in
+            if success {
+                completion(true)
+            } else {
+                self?.tryOpenUniversalLink(
+                    Array(urls.dropFirst()),
+                    universalLinksOnly: universalLinksOnly,
+                    completion: completion
+                )
+            }
         }
     }
 }

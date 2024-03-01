@@ -78,7 +78,7 @@ public final class TinkoffIDFactory: ITinkoffIDFactory {
     // MARK: - ITinkoffIDFactory
     
     public func build() -> ITinkoffID {
-        let urlSchemeBuilder = URLSchemeBuilder(baseUrlString: appConfiguration.authUrl)
+        let urlSchemeBuilder = URLSchemeBuilder(authDomains: appConfiguration.authDomains)
         let appLauncher = URLSchemeAppLauncher(
             appUrlScheme: appConfiguration.urlScheme,
             builder: urlSchemeBuilder,

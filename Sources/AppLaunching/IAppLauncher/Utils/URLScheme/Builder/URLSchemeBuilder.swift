@@ -20,10 +20,6 @@ import Foundation
 
 final class URLSchemeBuilder: IURLSchemeBuilder {
     
-    enum Error: Swift.Error {
-        case unableToInitializeUrl
-    }
-    
     enum Param: String {
         case clientId
         case codeChallenge
@@ -31,17 +27,13 @@ final class URLSchemeBuilder: IURLSchemeBuilder {
         case callbackUrl
     }
     
-    private let baseUrlString: String
+    private let authDomains: [String]
     
-    init(baseUrlString: String) {
-        self.baseUrlString = baseUrlString
+    init(authDomains: [String]) {
+        self.authDomains = authDomains
     }
     
-    var baseUrl: URL? {
-        URL(string: baseUrlString)
-    }
-    
-    func buildUrlScheme(with options: AppLaunchOptions) throws -> URL {
+    func buildUrlSchemes(with options: AppLaunchOptions) -> [URL] {
         let params = [
             Param.clientId: options.clientId,
             .codeChallenge: options.payload.challenge,
@@ -49,15 +41,17 @@ final class URLSchemeBuilder: IURLSchemeBuilder {
             .callbackUrl: options.callbackUrl
         ]
         
-        var components = URLComponents(string: baseUrlString)
-        components?.queryItems = params.map {
-            URLQueryItem(name: $0.key.rawValue, value: $0.value)
+        return authDomains.compactMap { authDomain in
+            let partnerAuthLink = authDomain + .partnerAuthSuffix
+            var components = URLComponents(string: partnerAuthLink)
+            components?.queryItems = params.map {
+                URLQueryItem(name: $0.key.rawValue, value: $0.value)
+            }
+            return components?.url
         }
-        
-        guard let url = components?.url else {
-            throw Error.unableToInitializeUrl
-        }
-        
-        return url
     }
+}
+
+private extension String {
+    static let partnerAuthSuffix = "partner_auth"
 }

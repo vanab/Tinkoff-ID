@@ -20,12 +20,11 @@ import Foundation
 @testable import TinkoffID
 
 final class MockedURLSchemeBuilder: IURLSchemeBuilder {
-    var baseUrl: URL?
     
-    var nextBuildUrlSchemeResult: URL!
+    var nextBuildUrlSchemeResult: [URL]!
     var lastOptions: AppLaunchOptions?
     
-    func buildUrlScheme(with options: AppLaunchOptions) throws -> URL {
+    func buildUrlSchemes(with options: AppLaunchOptions) -> [URL] {
         lastOptions = options
         
         defer {

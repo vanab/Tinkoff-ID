@@ -23,9 +23,9 @@ public protocol TargetAppConfiguration {
     /// URL-схема, используемая для определения установлено ли заданное приложение
     var urlScheme: String { get }
     
-    /// Ссылка для проведения авторизации
-    var authUrl: String { get }
+    /// Домены для проведения авторизации
+    var authDomains: [String] { get }
 
-    /// Признак того является ли `authUrl` универсальной ссылкой (https://...)
+    /// Признак того являются ли ссылки, собранные из `authUrl`, универсальными ссылками (https://...)
     var usesUniversalLinks: Bool { get }
 }

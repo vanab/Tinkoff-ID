@@ -22,10 +22,15 @@ import XCTest
 class URLSchemeBuilderTests: XCTestCase {
     
     private var builder: URLSchemeBuilder!
-    private let baseUrlString = "someapp://"
+    private let baseUrlString = "https://tinkoff.ru/"
 
     override func setUpWithError() throws {
-        builder = URLSchemeBuilder(baseUrlString: baseUrlString)
+        builder = URLSchemeBuilder(authDomains: [baseUrlString])
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        builder = nil
     }
     
     func testThatBuilderProducesUrlWithCorrectBaseUrl() {
@@ -33,10 +38,10 @@ class URLSchemeBuilderTests: XCTestCase {
         let expectedBaseUrl = baseUrlString
         
         // When
-        let components = buildSampleUrlComponents()
+        let components = buildSampleUrlComponents().first!
         
         // Then
-        XCTAssertEqual(components.scheme! + "://", expectedBaseUrl)
+        XCTAssertEqual("\(components.scheme!)://\(components.host!)/", expectedBaseUrl)
     }
     
     func testThatBuilderProducesUrlWithCorrectQueryParameters() {
@@ -51,7 +56,7 @@ class URLSchemeBuilderTests: XCTestCase {
         ]
         
         // When
-        let components = buildSampleUrlComponents()
+        let components = buildSampleUrlComponents().first!
         
         // Then
         let containsUnexpectedResults = components.queryItems?.count != expectedQueryItems.count
@@ -66,12 +71,16 @@ class URLSchemeBuilderTests: XCTestCase {
     
     // MARK: - Private
     
-    private func buildSampleUrlScheme() -> URL {
-        try! builder.buildUrlScheme(with: .stub)
+    private func buildSampleUrlSchemes() -> [URL] {
+        builder.buildUrlSchemes(with: .stub)
     }
     
-    private func buildSampleUrlComponents() -> URLComponents {
-        URLComponents(url: buildSampleUrlScheme(),
-                      resolvingAgainstBaseURL: true)!
+    private func buildSampleUrlComponents() -> [URLComponents] {
+        buildSampleUrlSchemes().map {
+            URLComponents(
+                url: $0,
+                resolvingAgainstBaseURL: true
+            )!
+        }
     }
 }

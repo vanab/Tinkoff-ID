@@ -51,7 +51,7 @@ class URLSchemeAppLauncherTests: XCTestCase {
         // Given
         let expectedOptions = AppLaunchOptions.stub
         
-        schemeBuilder.nextBuildUrlSchemeResult = URL(string: appUrlScheme)
+        schemeBuilder.nextBuildUrlSchemeResult = [URL(string: appUrlScheme)!]
         router.nextOpenResult = true
         
         // When
@@ -63,9 +63,9 @@ class URLSchemeAppLauncherTests: XCTestCase {
     
     func testThatURLWillBePassedToRouterAfterConstructing() {
         // Given
-        let expectedUrl = URL(string: appUrlScheme)
+        let expectedUrl = URL(string: appUrlScheme)!
         
-        schemeBuilder.nextBuildUrlSchemeResult = expectedUrl
+        schemeBuilder.nextBuildUrlSchemeResult = [expectedUrl]
         router.nextOpenResult = true
         
         // When
@@ -77,15 +77,45 @@ class URLSchemeAppLauncherTests: XCTestCase {
         XCTAssertEqual(router.lastOpenedURL, expectedUrl)
     }
     
-    func testThatErrorWillBeThrownIfItsUnableToLaunchApp() {
+    func testThatErrorWillBeThrownIfItsUnableToInitializeAnyUrl() {
         // Given
-        schemeBuilder.nextBuildUrlSchemeResult = URL(string: appUrlScheme)
+        schemeBuilder.nextBuildUrlSchemeResult = []
         router.nextOpenResult = false
         
         // When
         let when = { try self.launcher.launchApp(with: .stub,  universalLinksOnly: false) { _ in } }
         
         // Then
-        assertErrorEqual(URLSchemeAppLauncher.Error.launchFailure, when)
+        assertErrorEqual(URLSchemeAppLauncher.Error.unableToInitializeAnyUrl, when)
+    }
+    
+    func testThatLaunchAppCompletionResultWillBeFalse() {
+        // Given
+        schemeBuilder.nextBuildUrlSchemeResult = [URL(string: appUrlScheme)!]
+        router.nextOpenResult = false
+        
+        // When
+        var launchAppResult: Bool = true
+        try? launcher.launchApp(with: .stub,  universalLinksOnly: false) { result in
+            launchAppResult = result
+        }
+        
+        // Then
+        XCTAssertEqual(launchAppResult, false)
+    }
+    
+    func testThatLaunchAppCompletionResultWillBeTrue() {
+        // Given
+        schemeBuilder.nextBuildUrlSchemeResult = [URL(string: appUrlScheme)!]
+        router.nextOpenResult = true
+        
+        // When
+        var launchAppResult: Bool = false
+        try? launcher.launchApp(with: .stub,  universalLinksOnly: false) { result in
+            launchAppResult = result
+        }
+        
+        // Then
+        XCTAssertEqual(launchAppResult, true)
     }
 }
