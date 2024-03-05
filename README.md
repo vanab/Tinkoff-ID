@@ -63,7 +63,7 @@ pod 'TinkoffID'
 ```
 <key>LSApplicationQueriesSchemes</key>
 <array>
-    <string>tinkoffbank</string>
+    <string>bank100000000004</string>
 </array>
 ```
 + Добавленная запись в `plist`, позволяющая Вашему приложению получать запасные сертификаты SSL Тинькофф.

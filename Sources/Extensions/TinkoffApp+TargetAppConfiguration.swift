@@ -23,7 +23,7 @@ extension TinkoffApp: TargetAppConfiguration {
     public var urlScheme: String {
         switch self {
         case .bank:
-            return "tinkoffbank://"
+            return "bank100000000004://"
         }
     }
     
