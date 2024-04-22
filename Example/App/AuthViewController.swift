@@ -29,7 +29,7 @@ final class AuthViewController: UIViewController {
     // MARK: - UI
     lazy var credentialsLabel = UILabel()
     lazy var signInButton = TinkoffIDButtonBuilder.build(
-        configuration: TinkoffIDButtonConfiguration(size: .large),
+        configuration: TinkoffIDButtonConfiguration(style: .primary),
         title: "Войти с "
     )
     lazy var signOutButton = UIButton()

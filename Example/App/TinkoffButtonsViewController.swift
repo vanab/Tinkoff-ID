@@ -50,14 +50,14 @@ class TinkoffButtonsViewController: UIViewController {
 
     private func setupButtons() {
         let buttonSmallDark = TinkoffIDButtonBuilder.build(
-            configuration: TinkoffIDButtonConfiguration(colorStyle: .alternativeDark, size: .small)
+            configuration: TinkoffIDButtonConfiguration(style: .dark, size: .small)
         )
-        stackView.addArrangedSubview(createLabel(with: "Small, alternativeDark"))
+        stackView.addArrangedSubview(createLabel(with: "Small, black"))
         stackView.addArrangedSubview(buttonSmallDark)
         stackView.setCustomSpacing(15, after: buttonSmallDark)
 
         let buttonSmall = TinkoffIDButtonBuilder.build(
-            configuration: TinkoffIDButtonConfiguration(size: .small),
+            configuration: TinkoffIDButtonConfiguration(),
             title: "Войти с "
         )
         stackView.addArrangedSubview(createLabel(with: "Small, custom title"))
@@ -65,47 +65,55 @@ class TinkoffButtonsViewController: UIViewController {
         stackView.setCustomSpacing(15, after: buttonSmall)
 
         let buttonMedium = TinkoffIDButtonBuilder.build(
-            configuration: TinkoffIDButtonConfiguration(colorStyle: .alternativeLight)
+            configuration: TinkoffIDButtonConfiguration(style: .alternativeLight, size: .medium)
         )
-        stackView.addArrangedSubview(createLabel(with: "Medium, alternativeLight"))
+        stackView.addArrangedSubview(createLabel(with: "Medium, gray"))
         stackView.addArrangedSubview(buttonMedium)
         stackView.setCustomSpacing(15, after: buttonMedium)
 
+        let whiteMedium = TinkoffIDButtonBuilder.build(
+            configuration: TinkoffIDButtonConfiguration(style: .light, size: .medium)
+        )
+        stackView.addArrangedSubview(createLabel(with: "Medium, white"))
+        stackView.addArrangedSubview(whiteMedium)
+        stackView.setCustomSpacing(15, after: whiteMedium)
+
         let buttonLarge = TinkoffIDButtonBuilder.build(
             configuration: TinkoffIDButtonConfiguration(
-                colorStyle: .alternativeDark,
+                style: .dark,
                 size: .large,
                 font: UIFont(name: "Noteworthy", size: 15)!
             ),
             title: "Войти с "
         )
-        stackView.addArrangedSubview(createLabel(with: "Large, alternativeDark, custom font"))
+
+        stackView.addArrangedSubview(createLabel(with: "Large, black, custom font"))
         stackView.addArrangedSubview(buttonLarge)
         stackView.setCustomSpacing(15, after: buttonLarge)
 
         let buttonSmallBadge = TinkoffIDButtonBuilder.build(
             configuration: TinkoffIDButtonConfiguration(size: .small),
-            badge: "5% кэшбэк"
+            badge: .empty(value: 5)
         )
         stackView.addArrangedSubview(createLabel(with: "Small, badge"))
         stackView.addArrangedSubview(buttonSmallBadge)
         stackView.setCustomSpacing(15, after: buttonSmallBadge)
 
         let buttonCustomSizeBadge = TinkoffIDButtonBuilder.build(
-            configuration: TinkoffIDButtonConfiguration(colorStyle: .alternativeLight, cornerRadius: 20),
-            badge: "5% кэшбэк"
+            configuration: TinkoffIDButtonConfiguration(style: .alternativeLight, cornerRadius: 20),
+            badge: .empty(value: 5.20)
         )
-        stackView.addArrangedSubview(createLabel(with: "Custom size, badge, alternativeLight, corner radius 20"))
+        stackView.addArrangedSubview(createLabel(with: "Custom size, badge, gray, corner radius 20"))
         stackView.addArrangedSubview(buttonCustomSizeBadge)
         stackView.setCustomSpacing(15, after: buttonCustomSizeBadge)
         buttonCustomSizeBadge.heightAnchor.constraint(equalToConstant: 80).isActive = true
         buttonCustomSizeBadge.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
 
         let buttonBadge = TinkoffIDButtonBuilder.build(
-            configuration: TinkoffIDButtonConfiguration(colorStyle: .alternativeDark),
-            badge: "500000% кэшбэк"
+            configuration: TinkoffIDButtonConfiguration(style: .light),
+            badge: .until(value: 5.15)
         )
-        stackView.addArrangedSubview(createLabel(with: "badge, alternativeDark"))
+        stackView.addArrangedSubview(createLabel(with: "badge, white"))
         stackView.addArrangedSubview(buttonBadge)
         stackView.setCustomSpacing(15, after: buttonBadge)
 
@@ -114,8 +122,8 @@ class TinkoffButtonsViewController: UIViewController {
         stackView.addArrangedSubview(compactButton)
         stackView.setCustomSpacing(15, after: compactButton)
 
-        let compactButtonLight = TinkoffIDButtonBuilder.buildCompact(colorStyle: .alternativeLight)
-        stackView.addArrangedSubview(createLabel(with: "Compact button, alternativeLight, custom size"))
+        let compactButtonLight = TinkoffIDButtonBuilder.buildCompact(colorStyle: .light)
+        stackView.addArrangedSubview(createLabel(with: "Compact button, white, custom size"))
         stackView.addArrangedSubview(compactButtonLight)
         compactButtonLight.heightAnchor.constraint(equalToConstant: 70).isActive = true
         compactButtonLight.widthAnchor.constraint(equalToConstant: 70).isActive = true

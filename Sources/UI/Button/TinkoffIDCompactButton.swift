@@ -25,8 +25,14 @@ final class TinkoffIDCompactButton: UIButton {
     
     /// Изображение
     private var image: UIImage? {
-        Bundle.resourcesBundle?
-            .imageNamed("logo")
+        switch colorStyle {
+        case .primary:
+            Bundle.resourcesBundle?
+                .imageNamed("logo-t-white")
+        case .alternativeLight, .dark, .light:
+            Bundle.resourcesBundle?
+                .imageNamed("logo-t-yellow")
+        }
     }
     
     private let colorStyle: TinkoffIDButtonColorStyle
@@ -46,7 +52,7 @@ final class TinkoffIDCompactButton: UIButton {
     }
     
     required init?(coder: NSCoder) {
-        self.colorStyle = .default
+        self.colorStyle = .primary
         
         super.init(coder: coder)
         didInitialize()
@@ -60,6 +66,17 @@ final class TinkoffIDCompactButton: UIButton {
         super.layoutSubviews()
 
         layer.cornerRadius = bounds.height/2
+        
+        let maxSide = max(bounds.width, bounds.height)
+        if maxSide > size {
+            let scaleFactor: CGFloat = 16/56
+            contentEdgeInsets = UIEdgeInsets(
+                top: maxSide * scaleFactor,
+                left: maxSide * scaleFactor,
+                bottom: maxSide * scaleFactor,
+                right: maxSide * scaleFactor
+            )
+        }
     }
 
     // MARK: - Private
@@ -70,9 +87,9 @@ final class TinkoffIDCompactButton: UIButton {
     }
     
     private func configure() {
-        
+
         // Image
-        imageView?.contentMode = .scaleToFill
+        imageView?.contentMode = .scaleAspectFit
         setImage(image, for: .normal)
         setImage(image, for: .highlighted)
         contentHorizontalAlignment = .fill
@@ -80,7 +97,12 @@ final class TinkoffIDCompactButton: UIButton {
 
         setContentHuggingPriority(.required, for: .vertical)
 
-        contentEdgeInsets = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
+        contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+
+        if case .light = colorStyle {
+            self.layer.borderColor = colorStyle.borderColor.cgColor
+            self.layer.borderWidth = 1
+        }
     }
     
     private func updateAppearanceForCurrentState() {
