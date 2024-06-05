@@ -20,7 +20,7 @@ import Foundation
 
 public enum TinkoffIDButtonConstants {
 
-    public static let defaultTitle = "Tinkoff"
+    public static let defaultTitle = "T-Bank"
 
     public static let defaultCornerRadius: CGFloat = 8
 
