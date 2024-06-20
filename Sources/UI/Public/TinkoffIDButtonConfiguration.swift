@@ -43,14 +43,14 @@ public struct TinkoffIDButtonConfiguration {
     public init(
         style: TinkoffIDButtonColorStyle = TinkoffIDButtonConstants.defaultColorStyle,
         size: TinkoffIDButtonSize = .medium,
-        cornerRadius: CGFloat = TinkoffIDButtonConstants.defaultCornerRadius,
-        font: UIFont = TinkoffIDButtonConstants.defaultTitleFont,
-        badgeFont: UIFont = TinkoffIDButtonConstants.defaultBadgeFont
+        cornerRadius: CGFloat? = nil,
+        font: UIFont? = nil,
+        badgeFont: UIFont? = nil
     ) {
         self.style = style
         self.size = size
-        self.cornerRadius = cornerRadius
-        self.font = font
-        self.badgeFont = badgeFont
+        self.cornerRadius = cornerRadius ?? TinkoffIDButtonConstants.defaultCornerRadius
+        self.font = font ?? TinkoffIDButtonConstants.defaultTitleFont
+        self.badgeFont = badgeFont ?? TinkoffIDButtonConstants.defaultBadgeFont
     }
 }

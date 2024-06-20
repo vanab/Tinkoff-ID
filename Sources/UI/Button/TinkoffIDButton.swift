@@ -27,8 +27,8 @@ final class TinkoffIDButton: UIButton {
 
     // MARK: Configuration
 
-    private var config: TinkoffIDButtonConfiguration = .init()
-    private var size: TinkoffIDButtonSize = .medium
+    private var config: TinkoffIDButtonConfiguration
+    private var size: TinkoffIDButtonSize
     private var cachedSize: CGSize = .zero
 
     // MARK: UI views
@@ -50,7 +50,6 @@ final class TinkoffIDButton: UIButton {
         }
 
         let badgeWidth = badgeView.frame.width
-            - imageView!.frame.width
             + size.imageWithBadgeLeadingOffset
 
         return .init(
@@ -66,17 +65,19 @@ final class TinkoffIDButton: UIButton {
         titleString: String? = nil,
         badgeStyle: BadgeStyle? = nil
     ) {
-        super.init(frame: .zero)
         self.config = configuration
+        self.size = configuration.size
+        super.init(frame: .zero)
         self.titleString = titleString ?? ""
         self.badgeStyle = badgeStyle
         setupView()
     }
 
     required init?(coder: NSCoder) {
+        self.config = .init()
+        self.size = .medium
         super.init(coder: coder)
         self.setTitle(TinkoffIDButtonConstants.defaultTitle, for: .normal)
-        self.config = .init()
         self.titleString = TinkoffIDButtonConstants.defaultTitle
         self.badgeStyle = .none
         setupView()
@@ -84,7 +85,7 @@ final class TinkoffIDButton: UIButton {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        guard cachedSize != bounds.size else { return }
+        guard bounds.size.height != .zero else { return }
         cachedSize = bounds.size
         size = TinkoffIDButtonSize(height: bounds.height)
         layout()
@@ -258,6 +259,10 @@ extension TinkoffIDButton {
         setImage(size.image, for: .highlighted)
         imageView?.sizeThatFits(size.imageSize)
 
+        addInsetImageBorder()
+    }
+
+    private func addInsetImageBorder() {
         imageView?.layer.cornerRadius = imageView!.frame.height / 2
         imageView?.layer.borderWidth = size.imageBorderWidth
         imageView?.layer.borderColor = config.style.imageBorderColor.cgColor

@@ -25,16 +25,17 @@ final class TinkoffIDCompactButton: UIButton {
     
     /// Изображение
     private var image: UIImage? {
-        switch colorStyle {
-        case .primary:
-            Bundle.resourcesBundle?
-                .imageNamed("logo-t-white")
-        case .alternativeLight, .dark, .light:
-            Bundle.resourcesBundle?
-                .imageNamed("logo-t-yellow")
-        }
+        Bundle.resourcesBundle?
+            .imageNamed("idLogoL")
     }
-    
+    private lazy var imageBorder: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.layer.borderWidth = 2
+        view.layer.borderColor = UIColor.white.cgColor
+        return view
+    }()
+
     private let colorStyle: TinkoffIDButtonColorStyle
     
     override var isHighlighted: Bool {
@@ -65,17 +66,20 @@ final class TinkoffIDCompactButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        layer.cornerRadius = bounds.height/2
-        
+        layer.cornerRadius = bounds.height / 2
+
         let maxSide = max(bounds.width, bounds.height)
         if maxSide > size {
-            let scaleFactor: CGFloat = 16/56
-            contentEdgeInsets = UIEdgeInsets(
-                top: maxSide * scaleFactor,
-                left: maxSide * scaleFactor,
-                bottom: maxSide * scaleFactor,
-                right: maxSide * scaleFactor
-            )
+            updateInsets()
+        }
+
+        if case .light = colorStyle {
+            self.layer.borderColor = colorStyle.borderColor.cgColor
+            self.layer.borderWidth = 1
+        }
+
+        if case .dark = colorStyle {
+            addOutsetImageBorder()
         }
     }
 
@@ -95,17 +99,33 @@ final class TinkoffIDCompactButton: UIButton {
         contentHorizontalAlignment = .fill
         contentVerticalAlignment = .fill
 
-        setContentHuggingPriority(.required, for: .vertical)
+        contentEdgeInsets = UIEdgeInsets(top: 18, left: 9, bottom: 18, right: 9)
 
-        contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-
-        if case .light = colorStyle {
-            self.layer.borderColor = colorStyle.borderColor.cgColor
-            self.layer.borderWidth = 1
-        }
+        addSubview(imageBorder)
     }
     
     private func updateAppearanceForCurrentState() {
         backgroundColor = colorStyle.backgroundColorFor(state: state)
+    }
+
+    private func updateInsets() {
+        let scaleFactorVertical: CGFloat = 18/size
+        let scaleFactorHorizontal: CGFloat = 9/size
+        contentEdgeInsets = UIEdgeInsets(
+            top: (bounds.height * scaleFactorVertical),
+            left: (bounds.width * scaleFactorHorizontal),
+            bottom: (bounds.height * scaleFactorVertical),
+            right: (bounds.width * scaleFactorHorizontal)
+        )
+    }
+
+
+    private func addOutsetImageBorder() {
+        imageBorder.frame.size = CGSize(
+            width: imageView!.frame.width + 2 * 2,
+            height: imageView!.frame.height + 2 * 2
+        )
+        imageBorder.center = imageView!.center
+        imageBorder.layer.cornerRadius = imageBorder.frame.height/2
     }
 }
