@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.resources = 'Sources/**/*.{xcassets,lproj}'
   s.static_framework = true
   
-  s.dependency 'TCSSSLPinningPublic', '~> 8.1'
+  s.dependency 'TSSLPinningPublic', '~> 8.1'
 
   s.test_spec('Tests') do |test_spec|
     test_spec.source_files = 'Tests/**/*.{swift}'
