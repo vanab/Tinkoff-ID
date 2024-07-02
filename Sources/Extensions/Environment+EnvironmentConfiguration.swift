@@ -17,7 +17,7 @@
 //  limitations under the License.
 
 import Foundation
-import TCSSSLPinning
+import TCSSSLPinningPublic
 
 extension TinkoffEnvironment: EnvironmentConfiguration {
     public var hostAndPinsUrl: String? {

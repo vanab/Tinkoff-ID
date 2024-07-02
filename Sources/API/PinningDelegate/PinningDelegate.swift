@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TCSSSLPinning
+import TCSSSLPinningPublic
 import WebKit
 
 protocol IPinningDelegate {}
