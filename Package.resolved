@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "TSSLPinningPublic",
+        "repositoryURL": "https://opensource.tbank.ru/mobile-tech/sslpinning.git",
+        "state": {
+          "branch": null,
+          "revision": "c37efba4ec807aee225ff2fab1569821c82c19ab",
+          "version": "10.0.0"
+        }
+      },
+      {
+        "package": "TrustKit",
+        "repositoryURL": "https://github.com/datatheorem/TrustKit",
+        "state": {
+          "branch": null,
+          "revision": "e3a11e01d937e187cef45ad88f162d1892147aa3",
+          "version": "3.0.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

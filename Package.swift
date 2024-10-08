@@ -13,10 +13,15 @@ let package = Package(
             targets: ["TinkoffID"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://opensource.tbank.ru/mobile-tech/sslpinning.git", from: "10.0.0")
+    ],
     targets: [
         .target(
             name: "TinkoffID",
-            dependencies: [],
+            dependencies: [
+                .product(name: "TCSSSLPinningPublic", package: "sslpinning")
+            ],
             path: "Sources"
         ),
         .testTarget(

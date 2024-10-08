@@ -17,6 +17,7 @@
 //  limitations under the License.
 
 import Foundation
+import UIKit
 
 public protocol IAuthWebViewSourceProvider {
     func getSourceViewController() -> UIViewController
